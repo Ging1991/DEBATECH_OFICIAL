@@ -8,9 +8,16 @@ import com.carloscaballero.debatech.modelo.Usuario;
 
 public interface EscuelaDAO extends DAO<Escuela>{
 
+	public abstract boolean nombreDeEscuelaOcupado(String nombre);
+
+	public abstract Integer nextEscuelaID();
+	
+	public abstract boolean estaAfiliado(Integer usuarioID, Integer escuelaID); 
+	
+	
+	
 	public abstract List<Escuela> traerEscuelas();
 	
-	public abstract boolean nombreTomado(String nombre);
 
 	public void afiliarUsuario(Escuela escuela, Usuario usuario);
 	

@@ -1,11 +1,12 @@
 package com.carloscaballero.debatech.modelo;
 
 public class Usuario {
-
+	private Integer ID;
 	private String nombre, password;
 
-	public Usuario(String nombre, String password) {
+	public Usuario(Integer ID, String nombre, String password) {
 		super();
+		this.ID = ID;
 		this.nombre = nombre;
 		this.password = password;
 	}
@@ -25,4 +26,13 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public Integer getID() {
+		return ID;
+	}
+
+	public void setID(Integer iD) {
+		ID = iD;
+	}
+	
 }

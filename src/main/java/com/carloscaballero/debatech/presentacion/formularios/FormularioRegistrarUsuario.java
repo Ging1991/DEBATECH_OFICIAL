@@ -2,7 +2,7 @@ package com.carloscaballero.debatech.presentacion.formularios;
 
 import com.carloscaballero.debatech.AplicacionUI;
 import com.carloscaballero.debatech.presentacion.paginas.PaginaPrincipal;
-import com.carloscaballero.debatech.servicios.DebatechController;
+import com.carloscaballero.debatech.servicios.manager.EscuelaManager;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
@@ -49,7 +49,7 @@ public class FormularioRegistrarUsuario extends VerticalLayout {
 		String password = tfPassword.getValue();
 		String passwordRepetido = tfPasswordRepetido.getValue();
 		
-		DebatechController control = new DebatechController();
+		EscuelaManager control = new EscuelaManager();
 		try {
 			control.registrarUsuario(usuario, password, passwordRepetido);
 		} catch (IllegalArgumentException e) {

@@ -1,13 +1,33 @@
 package com.carloscaballero.debatech.modelo;
 
 public class Mensaje {
-	
+	private Integer ID, usuarioID, temaID;
 	private String texto;
-	private Usuario usuario;
-	public Mensaje(String texto, Usuario usuario) {
-		super();
+	
+	public Mensaje(Integer iD, Integer usuarioID, Integer temaID, String texto) {
+		this.ID = iD;
+		this.usuarioID = usuarioID;
+		this.temaID = temaID;
 		this.texto = texto;
-		this.usuario = usuario;
+	}
+
+	public Integer getID() {
+		return ID;
+	}
+	public void setID(Integer iD) {
+		ID = iD;
+	}
+	public Integer getUsuarioID() {
+		return usuarioID;
+	}
+	public void setUsuarioID(Integer usuarioID) {
+		this.usuarioID = usuarioID;
+	}
+	public Integer getTemaID() {
+		return temaID;
+	}
+	public void setTemaID(Integer temaID) {
+		this.temaID = temaID;
 	}
 	public String getTexto() {
 		return texto;
@@ -15,13 +35,5 @@ public class Mensaje {
 	public void setTexto(String texto) {
 		this.texto = texto;
 	}
-	public Usuario getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-	
-	
 
 }

@@ -3,62 +3,69 @@ package com.carloscaballero.debatech.daos;
 import org.neodatis.odb.ODB;
 import org.neodatis.odb.ODBFactory;
 import org.neodatis.odb.Objects;
-
+import org.neodatis.odb.core.query.IQuery;
+import org.neodatis.odb.core.query.criteria.Where;
+import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 import com.carloscaballero.debatech.daos.interfaces.UsuarioDAO;
+import com.carloscaballero.debatech.modelo.Contador;
 import com.carloscaballero.debatech.modelo.Usuario;
 
 public class UsuarioDAONeodatis extends DAONeodatis<Usuario> implements UsuarioDAO{
-	
-	public Usuario getUsuario(String nombre) {
+
+	@Override
+	public boolean nombreDeUsuarioOcupado(String nombre) {
 		ODB odb  = ODBFactory.open(DEBATECH_DB);
-		Objects<Usuario> usuarios = odb.getObjects(Usuario.class);
-		Usuario usuario = null;
+		IQuery query = new CriteriaQuery(Usuario.class, Where.equal("nombre", nombre));
+		Objects<Usuario> usuarios = odb.getObjects(query);
 		
-		for (Usuario actual: usuarios) {
-			actual = usuarios.next();
-			if (actual.getNombre().equals(nombre))
-				usuario = actual;
-		}
+		boolean ocupado = true;
+		if (usuarios.isEmpty())
+			ocupado = false;
+		
+		odb.close();
+		return ocupado;
+	}
+	
+	public Integer nextUsuarioID() {
+		ODB odb  = ODBFactory.open(DEBATECH_DB);
+		Objects<Contador> contadorOBJ = odb.getObjects(Contador.class);
+
+		Contador contador;
+		if (contadorOBJ.isEmpty())
+			contador = new Contador();
+		else
+			contador = contadorOBJ.getFirst();
+		
+		Integer usuarioID = contador.getUsuarioID();
+		odb.store(contador);
+		odb.close();
+		return usuarioID;
+	}
+	
+	public Usuario getUsuario(String nombre, String password) {
+		ODB odb  = ODBFactory.open(DEBATECH_DB);
+		IQuery query = new CriteriaQuery(Usuario.class, Where.equal("nombre", nombre));
+		Objects<Usuario> usuariosOBJ = odb.getObjects(query);
+		
+		Usuario usuario = null;
+		if (!usuariosOBJ.isEmpty())
+			usuario = (Usuario) usuariosOBJ.getFirst();
 		
 		odb.close();
 		return usuario;
 	}
-
-	@Override
-	public boolean usuarioRegistrado(String usuario, String password) {
+	
+	public Usuario getUsuario(Integer usuarioID) {	
 		ODB odb  = ODBFactory.open(DEBATECH_DB);
-		Objects<Usuario> usuarios = odb.getObjects(Usuario.class);
-		boolean registrado = false;
+		IQuery query = new CriteriaQuery(Usuario.class, Where.equal("ID", usuarioID));
+		Objects<Usuario> usuariosOBJ = odb.getObjects(query);
 		
-		for (Usuario usuarioActual: usuarios) {
-			usuarioActual = usuarios.next();
-			if (usuarioActual.getNombre().equals(usuario) && usuarioActual.getPassword().equals(password))
-				registrado = true;
-		}
+		Usuario usuario = null;
+		if (!usuariosOBJ.isEmpty())
+			usuario = (Usuario) usuariosOBJ.getFirst();
 		
 		odb.close();
-		return registrado;
+		return usuario;
 	}
-
-	@Override
-	public boolean nombreTomado(String nombre) {
-		ODB odb  = ODBFactory.open(DEBATECH_DB);
-		Objects<Usuario> clientes = odb.getObjects(Usuario.class);
-		boolean registrado = false;
-		
-		for (Usuario usuario: clientes) {
-			usuario = clientes.next();
-			if (usuario.getNombre().equals(nombre))
-				registrado = true;
-		}
-		
-		odb.close();
-		return registrado;
-	}
-
-	@Override
-	public void registrarUsuario(String mail, String password) {
-		Usuario cliente = new Usuario(mail, password);
-		guardar(cliente);
-	}
+	
 }

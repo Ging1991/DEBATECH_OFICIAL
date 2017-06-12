@@ -18,9 +18,8 @@ public class ComponenteMensajes extends VerticalLayout {
 		addComponent(new Label(tema.getTitulo()));
 		List<Mensaje> mensajes = tema.getMensajes();
 	
-		for (Mensaje mensaje:mensajes) {
-			Label label = new Label(mensaje.getTexto());
-			addComponent(label);
-		}
+		for (Mensaje mensaje:mensajes)
+			addComponent(new ComponenteMensaje(mensaje));
+		
 	}
 }

@@ -1,7 +1,7 @@
 package com.carloscaballero.debatech.presentacion.formularios;
 
 import com.carloscaballero.debatech.presentacion.paginas.PaginaPrincipal;
-import com.carloscaballero.debatech.servicios.DebatechController;
+import com.carloscaballero.debatech.servicios.manager.EscuelaManager;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Notification;
@@ -33,7 +33,7 @@ public class FormularioCrearEscuela extends Panel {
 	private void crearEscuela() {
 		String nombre = inNombre.getValue();
 		String descripcion = inDescripcion.getValue();
-		DebatechController control = new DebatechController();
+		EscuelaManager control = new EscuelaManager();
 		
 		try {
 			control.crearEscuela(nombre, descripcion);

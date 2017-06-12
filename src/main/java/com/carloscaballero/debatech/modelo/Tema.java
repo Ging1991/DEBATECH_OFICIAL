@@ -1,27 +1,39 @@
 package com.carloscaballero.debatech.modelo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Tema {
+	private Integer ID, usuarioID, escuelaID;
 	private String titulo;
-	private List<Mensaje> mensajes;
 	
-	public Tema(String titulo) {
+	public Tema(Integer iD, Integer usuarioID, Integer escuelaID, String titulo) {
+		this.ID = iD;
+		this.usuarioID = usuarioID;
+		this.escuelaID = escuelaID;
 		this.titulo = titulo;
-		mensajes = new ArrayList<>();
 	}
 	
+	public Integer getID() {
+		return ID;
+	}
+	public void setID(Integer iD) {
+		ID = iD;
+	}
+	public Integer getUsuarioID() {
+		return usuarioID;
+	}
+	public void setUsuarioID(Integer usuarioID) {
+		this.usuarioID = usuarioID;
+	}
+	public Integer getEscuelaID() {
+		return escuelaID;
+	}
+	public void setEscuelaID(Integer escuelaID) {
+		this.escuelaID = escuelaID;
+	}
 	public String getTitulo() {
 		return titulo;
 	}
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
-	public List<Mensaje> getMensajes() {
-		return mensajes;
-	}
-	public void setMensajes(List<Mensaje> mensajes) {
-		this.mensajes = mensajes;
-	}
+
 }

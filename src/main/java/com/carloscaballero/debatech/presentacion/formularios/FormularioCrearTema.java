@@ -4,7 +4,7 @@ import com.carloscaballero.debatech.AplicacionUI;
 import com.carloscaballero.debatech.modelo.Escuela;
 import com.carloscaballero.debatech.modelo.Usuario;
 import com.carloscaballero.debatech.presentacion.paginas.PaginaEscuela;
-import com.carloscaballero.debatech.servicios.DebatechController;
+import com.carloscaballero.debatech.servicios.manager.EscuelaManager;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
@@ -53,7 +53,7 @@ public class FormularioCrearTema extends VerticalLayout{
 	
 	private void crearTema() {
 		String nombre = tfNombre.getValue();
-		DebatechController control = new DebatechController();
+		EscuelaManager control = new EscuelaManager();
 		AplicacionUI aplicacionUI = (AplicacionUI) UI.getCurrent();
 		Escuela escuela = (Escuela) aplicacionUI.getSesion("escuela");
 		Usuario usuario = (Usuario) aplicacionUI.getSesion("usuario");

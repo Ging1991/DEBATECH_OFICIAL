@@ -5,7 +5,7 @@ import com.carloscaballero.debatech.modelo.Mensaje;
 import com.carloscaballero.debatech.modelo.Tema;
 import com.carloscaballero.debatech.modelo.Usuario;
 import com.carloscaballero.debatech.presentacion.paginas.PaginaTema;
-import com.carloscaballero.debatech.servicios.DebatechController;
+import com.carloscaballero.debatech.servicios.manager.EscuelaManager;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
@@ -54,7 +54,7 @@ public class FormularioCrearMensaje extends VerticalLayout{
 	
 	private void responderTema() {
 		String respuesta = tfMensaje.getValue();
-		DebatechController control = new DebatechController();
+		EscuelaManager control = new EscuelaManager();
 		AplicacionUI aplicacionUI = (AplicacionUI) UI.getCurrent();
 		//Escuela escuela = (Escuela) aplicacionUI.getSesion("escuela");
 		Usuario usuario = (Usuario) aplicacionUI.getSesion("usuario");

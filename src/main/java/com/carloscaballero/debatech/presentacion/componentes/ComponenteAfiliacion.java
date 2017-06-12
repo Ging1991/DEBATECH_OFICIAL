@@ -4,7 +4,7 @@ import com.carloscaballero.debatech.AplicacionUI;
 import com.carloscaballero.debatech.modelo.Escuela;
 import com.carloscaballero.debatech.modelo.Usuario;
 import com.carloscaballero.debatech.presentacion.paginas.PaginaEscuela;
-import com.carloscaballero.debatech.servicios.DebatechController;
+import com.carloscaballero.debatech.servicios.manager.EscuelaManager;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
@@ -23,7 +23,7 @@ public class ComponenteAfiliacion extends VerticalLayout{
 			return;
 		}
 		
-		DebatechController control = new DebatechController();
+		EscuelaManager control = new EscuelaManager();
 		if (!control.estaAfiliado(usuario, escuela)) {
 			Button btAfiliacion = new Button("Afiliarse a esta escuela");
 			btAfiliacion.addClickListener(e -> {

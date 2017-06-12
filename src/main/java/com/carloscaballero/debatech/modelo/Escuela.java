@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Escuela {
-	
+	private Integer ID;
 	private String titulo, descripcion;
 	private List<Tema> temas;
 	private List<Usuario> afiliados;
 	
-	public Escuela(String titulo, String descripcion) {
+	public Escuela(Integer ID, String titulo, String descripcion) {
+		this.ID = ID;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.temas = new ArrayList<Tema>();
@@ -40,12 +41,11 @@ public class Escuela {
 	public void setAfiliados(List<Usuario> afiliados) {
 		this.afiliados = afiliados;
 	}
-	
-	
-	
-	
-	
-	
-	
+	public Integer getID() {
+		return ID;
+	}
+	public void setID(Integer iD) {
+		ID = iD;
+	}
 
 }
