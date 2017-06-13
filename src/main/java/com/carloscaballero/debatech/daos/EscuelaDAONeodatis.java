@@ -7,12 +7,12 @@ import org.neodatis.odb.ODBFactory;
 import org.neodatis.odb.Objects;
 import org.neodatis.odb.core.query.IQuery;
 import org.neodatis.odb.core.query.criteria.Where;
+import org.neodatis.odb.core.query.nq.SimpleNativeQuery;
 import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 import com.carloscaballero.debatech.daos.interfaces.EscuelaDAO;
+import com.carloscaballero.debatech.modelo.Afiliacion;
 import com.carloscaballero.debatech.modelo.Contador;
 import com.carloscaballero.debatech.modelo.Escuela;
-import com.carloscaballero.debatech.modelo.Tema;
-import com.carloscaballero.debatech.modelo.Usuario;
 
 public class EscuelaDAONeodatis extends DAONeodatis<Escuela> implements EscuelaDAO{
 	
@@ -47,15 +47,28 @@ public class EscuelaDAONeodatis extends DAONeodatis<Escuela> implements EscuelaD
 	}
 	
 	public boolean estaAfiliado(Integer usuarioID, Integer escuelaID){
+		ODB odb  = ODBFactory.open(DEBATECH_DB);
 		
-		return true;
+		SimpleNativeQuery query = new SimpleNativeQuery() {
+			private static final long serialVersionUID = 1L;
+
+			@SuppressWarnings("unused")
+			public boolean match(Afiliacion afiliacion) {
+            	boolean usuario = (afiliacion.getUsuarioID().equals(usuarioID));
+            	boolean escuela = (afiliacion.getEscuelaID().equals(escuelaID));
+            	return (usuario && escuela);
+            }
+        };
+		
+		Objects<Afiliacion> escuelasOBJ = odb.getObjects(query);
+		odb.close();
+		
+		boolean ocupado = true;
+		if (escuelasOBJ.isEmpty())
+			ocupado = false;
+		
+		return ocupado;
 	}
-	
-	
-	
-	
-	
-	
 	
 	@Override
 	public List<Escuela> traerEscuelas() {
@@ -73,37 +86,5 @@ public class EscuelaDAONeodatis extends DAONeodatis<Escuela> implements EscuelaD
 
 	public void actualizar(Escuela escuela){
 	}
-
-	@Override
-	public void afiliarUsuario(Escuela escuela, Usuario usuario) {
-		ODB odb = ODBFactory.open(DEBATECH_DB);
-		
-		IQuery queryEscuela = new CriteriaQuery(Escuela.class, Where.equal("titulo", escuela.getTitulo()));
-		IQuery queryUsuario = new CriteriaQuery(Usuario.class, Where.equal("nombre", usuario.getNombre()));
-		
-		Escuela escuelaGuardada = (Escuela) odb.getObjects(queryEscuela).getFirst();
-		Usuario usuarioGuardado = (Usuario) odb.getObjects(queryUsuario).getFirst();
-		
-		escuelaGuardada.getAfiliados().add(usuarioGuardado);
-		
-		odb.store(escuelaGuardada);
-		odb.close();
-	}
-
-	@Override
-	public void crearTema(Escuela escuela, Tema tema) {
-		ODB odb = ODBFactory.open(DEBATECH_DB);
-		IQuery queryEscuela = new CriteriaQuery(Escuela.class, Where.equal("titulo", escuela.getTitulo()));
-		Escuela escuelaGuardada = (Escuela) odb.getObjects(queryEscuela).getFirst();
-		
-		escuelaGuardada.getTemas().add(tema);
-		odb.store(escuelaGuardada);
-		odb.close();
-	}
-	
-	
-	
-	
-	
 
 }

@@ -11,7 +11,7 @@ public class ComponenteMensaje extends Panel{
 	public ComponenteMensaje(Mensaje mensaje) {
 		super("Respuesta 1");
 		HorizontalSplitPanel panel = new HorizontalSplitPanel();
-		panel.setFirstComponent(new Label(mensaje.getUsuario().getNombre()));
+		panel.setFirstComponent(new Label("Nombre de usuario que respondio"));
 		panel.setSecondComponent(new Label(mensaje.getTexto()));
 	}
 }
