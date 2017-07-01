@@ -7,9 +7,11 @@ import org.neodatis.odb.ODBFactory;
 import org.neodatis.odb.Objects;
 import org.neodatis.odb.core.query.IQuery;
 import org.neodatis.odb.core.query.criteria.Where;
+import org.neodatis.odb.core.query.nq.SimpleNativeQuery;
 import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 import com.carloscaballero.debatech.daos.interfaces.TemaDAO;
 import com.carloscaballero.debatech.modelo.Contador;
+import com.carloscaballero.debatech.modelo.Escuela;
 import com.carloscaballero.debatech.modelo.Mensaje;
 import com.carloscaballero.debatech.modelo.Tema;
 
@@ -48,7 +50,27 @@ public class TemaDAONeodatis extends DAONeodatis<Tema> implements TemaDAO{
 	}
 	
 	public boolean haRespondido(Integer usuarioID, Integer temaID){
-		return true;
+		ODB odb  = ODBFactory.open(DEBATECH_DB);
+				
+		SimpleNativeQuery query = new SimpleNativeQuery() {
+			private static final long serialVersionUID = 1L;
+
+			@SuppressWarnings("unused")
+			public boolean match(Mensaje mensaje) {
+            	boolean usuario = (mensaje.getUsuarioID().equals(usuarioID));
+            	boolean tema = (mensaje.getTemaID().equals(temaID));
+            	return (usuario && tema);
+            }
+        };
+		
+		Objects<Mensaje> mensajesOBJ = odb.getObjects(query);
+		odb.close();
+		
+		boolean respondio = true;
+		if (mensajesOBJ.isEmpty())
+			respondio = false;
+		
+		return respondio;
 	}
 	
 	public List<Tema> getTemasDeEscuela(Integer escuelaID){
@@ -81,6 +103,19 @@ public class TemaDAONeodatis extends DAONeodatis<Tema> implements TemaDAO{
 	return mensajes;
 }
 
-	
+	@Override
+	public Escuela getEscuelaDeTema(Integer temaID) {
+		ODB odb = ODBFactory.open(DEBATECH_DB);
+		
+		IQuery queryTema = new CriteriaQuery(Tema.class, Where.equal("ID", temaID));
+		Objects<Tema> temasOBJ = odb.getObjects(queryTema);
+		Tema tema = temasOBJ.getFirst();
+		
+		IQuery queryEscuela = new CriteriaQuery(Escuela.class, Where.equal("ID", tema.getEscuelaID()));
+		Objects<Escuela> escuelasOBJ = odb.getObjects(queryEscuela);
+		
+		odb.close();
+		return escuelasOBJ.getFirst();
+	}
 
 }

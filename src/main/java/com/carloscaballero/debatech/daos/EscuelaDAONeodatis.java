@@ -19,7 +19,7 @@ public class EscuelaDAONeodatis extends DAONeodatis<Escuela> implements EscuelaD
 	@Override
 	public boolean nombreDeEscuelaOcupado(String nombre) {
 		ODB odb  = ODBFactory.open(DEBATECH_DB);
-		IQuery query = new CriteriaQuery(Escuela.class, Where.equal("nombre", nombre));
+		IQuery query = new CriteriaQuery(Escuela.class, Where.equal("titulo", nombre));
 		Objects<Escuela> escuelasOBJ = odb.getObjects(query);
 		
 		boolean ocupado = true;
@@ -85,6 +85,20 @@ public class EscuelaDAONeodatis extends DAONeodatis<Escuela> implements EscuelaD
 	}
 
 	public void actualizar(Escuela escuela){
+	}
+
+	@Override
+	public Escuela getEscuela(Integer escuelaID) {
+		ODB odb  = ODBFactory.open(DEBATECH_DB);
+		IQuery query = new CriteriaQuery(Escuela.class, Where.equal("ID", escuelaID));
+		Objects<Escuela> escuelasOBJ = odb.getObjects(query);
+		
+		Escuela escuela = null;
+		if (!escuelasOBJ.isEmpty())
+			escuela = (Escuela) escuelasOBJ.getFirst();
+		
+		odb.close();
+		return escuela;
 	}
 
 }

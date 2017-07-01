@@ -14,4 +14,6 @@ public interface EscuelaDAO extends DAO<Escuela>{
 	
 	public abstract List<Escuela> traerEscuelas();
 	
+	public abstract Escuela getEscuela(Integer escuelaID);
+	
 }

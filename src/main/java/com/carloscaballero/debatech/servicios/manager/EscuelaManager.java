@@ -43,24 +43,13 @@ public class EscuelaManager {
 	}
 
 	public static Escuela getEscuela(Integer escuelaID) {
-		//EscuelaDAO dao = new EscuelaDAONeodatis();
-		return null;
+		EscuelaDAO dao = new EscuelaDAONeodatis();
+		return dao.getEscuela(escuelaID);
 	}
 	
 	public static int getCantidadDeAfiliados(Escuela escuela) {
 		
 		return 0;
-	}
-	
-	public static void votarRepresentante(Escuela escuela, Usuario votante, Usuario votado) {
-		
-	}
-	
-	public static boolean haVotadoAEsteUsuario(Escuela escuela, Usuario votante, Usuario votado) {
-		
-		return false;
-	}
-	
-		
+	}	
 		
 }

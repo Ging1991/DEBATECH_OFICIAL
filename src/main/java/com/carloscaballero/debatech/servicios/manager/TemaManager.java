@@ -27,8 +27,9 @@ public class TemaManager {
 	}
 	
 	static public boolean haRespondido(Tema tema, Usuario usuario) {
-		TemaDAO dao = new TemaDAONeodatis();
-		return dao.haRespondido(usuario.getID(), tema.getID());
+		//TemaDAO dao = new TemaDAONeodatis();
+		//return dao.haRespondido(usuario.getID(), tema.getID());
+		return false;
 	}
 	
 	static public List<Tema> getTemasDeEscuela(Escuela escuela){
